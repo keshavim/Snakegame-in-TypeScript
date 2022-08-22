@@ -1,0 +1,19 @@
+
+head, body {height: 100%; height:100%; margin: 0%;}
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    color: #ddddff;
+    background-color: rgb(127, 127, 127);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+canvas {
+    display: block;
+    
+    background-color: black;
+    border: 1px solid whitesmoke;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SnakeGame</title>
+        <meta charset="utf-8"/>
+        <meta name="ViewPort" content="width = device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="./css/Style.css">
+    </head>
+    <body>
+        <canvas id="GameCanvas" width="600" height="500"></canvas>
+        <header>
+            <button id="start" onclick="main()">Start</button>
+            <button id="pause" onclick="pause()">Pause</button>
+            <label for="ShowGrid">ShowGrid</label><input id="ShowGrid" type="checkbox">
+            <label for="Rainbow">Rainbow Mode</label><input id="Rainbow" type="checkbox">
+            <label for="TileSize">TileSize</label><input id="TileSize" type="range" min="10" max="20" step="10">
+            <span id="score">Score:</span>
+
+        </header><br>
+
+        
+
+        <script src="./build/main.js"></script><br>
+    </body>
+</html>
