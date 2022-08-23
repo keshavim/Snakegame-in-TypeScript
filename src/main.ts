@@ -25,6 +25,7 @@ function main(){
         
     }
     dx = player[0].x > gi.canvas.width/2 ? -1 : 1;
+    dy = 0;
     apple = new GameObject("red");
     interval = window.setInterval(Update, 16);
 }
@@ -104,8 +105,10 @@ class GameObject {
     height:number = 0;
     color: string = "";
 
-    constructor(color:string) {
-        this.setPos(randInt(0, gi.canvas.width/tileSize) *tileSize, randInt(0, gi.canvas.height/tileSize)*tileSize);
+    constructor( color:string, x?: number, y?:number) {
+        if(x == undefined) x = randInt(0, gi.canvas.width/tileSize);
+        if(y == undefined) y = randInt(0, gi.canvas.height/tileSize)
+        this.setPos(x *tileSize, y*tileSize);
         this.width = tileSize;
         this.height = tileSize;
         this.color = color;
@@ -127,6 +130,7 @@ class GameObject {
 
 
 let canMove:boolean = true;
+let canTurn:boolean = true;
 let isDead : boolean = false;
 let snakeColor : string;
 let timer: NodeJS.Timeout;
@@ -157,7 +161,8 @@ function UpdatePlayer(){
     }
     if(canMove){
         canMove=false;
-        timer = setTimeout(()=>{canMove = true}, 400/speed);
+        canTurn = true;
+        timer = setTimeout(()=>{canMove = true; }, 400/speed);
     }
     
     
@@ -166,7 +171,8 @@ function CheckCollision(){
 
     if(player[0].x == apple.x && player[0].y == apple.y){
         apple.setPos(randInt(0, gi.canvas.width/tileSize) *tileSize, randInt(0, gi.canvas.height/tileSize)*tileSize);
-        player.push(new GameObject("green"));
+        let temp = new GameObject("green", -1, -1);
+        player.push(temp);
         score++;
         let s = document.getElementById("score");
         if(s !== null) s.innerText = "Score: " + score;
@@ -203,16 +209,16 @@ function CheckCollision(){
 function KeydownInput(event: KeyboardEvent){
     switch(event.code){
         case "ArrowUp":
-            if(dx != 0){dx = 0; dy = -1;}
+            if(dx != 0 && canTurn){dx = 0; dy = -1; canTurn = false;}
             break;
         case "ArrowDown":
-            if(dx != 0){ dx = 0; dy = 1;}
+            if(dx != 0 && canTurn){ dx = 0; dy = 1; canTurn = false;}
             break;
         case "ArrowLeft":
-            if(dy != 0){dx = -1; dy = 0;}
+            if(dy != 0 && canTurn){dx = -1; dy = 0; canTurn = false;}
             break;
         case "ArrowRight":
-            if(dy != 0){ dx = 1; dy = 0;}
+            if(dy != 0 && canTurn){ dx = 1; dy = 0; canTurn = false;}
             break;
         case "Space":
             speed = baseSpeed * 2 / (tileSize/10);

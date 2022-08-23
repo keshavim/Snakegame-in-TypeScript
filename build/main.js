@@ -16,6 +16,7 @@ function main() {
         }
     }
     dx = player[0].x > gi.canvas.width / 2 ? -1 : 1;
+    dy = 0;
     apple = new GameObject("red");
     interval = window.setInterval(Update, 16);
 }
@@ -71,13 +72,17 @@ let gi = {
     },
 };
 class GameObject {
-    constructor(color) {
+    constructor(color, x, y) {
         this.x = 0;
         this.y = 0;
         this.width = 0;
         this.height = 0;
         this.color = "";
-        this.setPos(randInt(0, gi.canvas.width / tileSize) * tileSize, randInt(0, gi.canvas.height / tileSize) * tileSize);
+        if (x == undefined)
+            x = randInt(0, gi.canvas.width / tileSize);
+        if (y == undefined)
+            y = randInt(0, gi.canvas.height / tileSize);
+        this.setPos(x * tileSize, y * tileSize);
         this.width = tileSize;
         this.height = tileSize;
         this.color = color;
@@ -99,6 +104,7 @@ class GameObject {
     }
 }
 let canMove = true;
+let canTurn = true;
 let isDead = false;
 let snakeColor;
 let timer;
@@ -126,6 +132,7 @@ function UpdatePlayer() {
     }
     if (canMove) {
         canMove = false;
+        canTurn = true;
         timer = setTimeout(() => { canMove = true; }, 400 / speed);
     }
 }
@@ -133,7 +140,8 @@ function CheckCollision() {
     var _a, _b, _c, _d;
     if (player[0].x == apple.x && player[0].y == apple.y) {
         apple.setPos(randInt(0, gi.canvas.width / tileSize) * tileSize, randInt(0, gi.canvas.height / tileSize) * tileSize);
-        player.push(new GameObject("green"));
+        let temp = new GameObject("green", -1, -1);
+        player.push(temp);
         score++;
         let s = document.getElementById("score");
         if (s !== null)
@@ -169,27 +177,31 @@ function CheckCollision() {
 function KeydownInput(event) {
     switch (event.code) {
         case "ArrowUp":
-            if (dx != 0) {
+            if (dx != 0 && canTurn) {
                 dx = 0;
                 dy = -1;
+                canTurn = false;
             }
             break;
         case "ArrowDown":
-            if (dx != 0) {
+            if (dx != 0 && canTurn) {
                 dx = 0;
                 dy = 1;
+                canTurn = false;
             }
             break;
         case "ArrowLeft":
-            if (dy != 0) {
+            if (dy != 0 && canTurn) {
                 dx = -1;
                 dy = 0;
+                canTurn = false;
             }
             break;
         case "ArrowRight":
-            if (dy != 0) {
+            if (dy != 0 && canTurn) {
                 dx = 1;
                 dy = 0;
+                canTurn = false;
             }
             break;
         case "Space":
