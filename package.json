@@ -1,13 +1,13 @@
 {
   "name": "snakeweb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Snake game in typeScript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server"
   },
-  "author": "",
+  "author": "Keshavi",
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.6.1"
