@@ -1,2 +1,2 @@
 # Snakegame-in-TypeScript
-snake game in typescript
+this is just a project I used to learn HTML, CSS and TypeScript
